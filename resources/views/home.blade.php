@@ -15,7 +15,7 @@
     <div class="card-columns">
         @foreach ($news as $new)
             <div class="card mb-4">
-                <img class="card-img-top" src="{{ $new->urlToImage }}" alt="Card image cap">
+                <img class="card-img-top" src=" @if($new->urlToImage) {{ $new->urlToImage }} @else https://www.unesale.com/ProductImages/Large/notfound.png @endif" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ $new->title }}</h5>
                     <p class="card-text">{{ $new->description }}</p>

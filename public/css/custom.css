@@ -44,3 +44,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+.card-img-top {
+    background-image: url('https://www.unesale.com/ProductImages/Large/notfound.png')
+}
