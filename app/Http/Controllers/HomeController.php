@@ -6,24 +6,21 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $pagina = 'https://newsapi.org/v2/everything?q=economia&language=pt&apiKey=ede96d0e3fdd4169a1200179f1796469&pageSize=100';
+        $page = $request->page ? $request->page : 1;
+
+        $search =  $request->search;
+
+        if($search)
+            $pagina = 'https://newsapi.org/v2/everything?language=pt&pageSize=12&apiKey='.env("API_KEY").'&page='.$page.'&q='.$search;
+        else
+            $pagina = 'https://newsapi.org/v2/top-headlines?language=pt&pageSize=12&apiKey='.env("API_KEY").'&page='.$page;
 
         $ch = curl_init();
 
@@ -32,12 +29,18 @@ class HomeController extends Controller
         // define que o conteúdo obtido deve ser retornado em vez de exibido
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 
-        $retorno = curl_exec( $ch );
-        //dd($retorno);
+        $retorno = json_decode(curl_exec( $ch ));
+
         curl_close( $ch );
 
-        $news = json_decode($retorno)->articles;
-        //dd($news);
-        return view('home',['news' => $news]);
+        $news = collect($retorno->articles);
+
+        $max_pages = $retorno->totalResults/12;
+
+        return view('home',['news' => $news, 'page' => $page, 'search' => $search, 'max_pages' => $max_pages]);
+    }
+    public function detail()
+    {
+
     }
 }
