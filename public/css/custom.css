@@ -1,6 +1,16 @@
-
+.tab-content{
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+}
+.card-news{
+    webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
 .card-img-top {
     height: 170px;
+    background-image: url('https://www.unesale.com/ProductImages/Large/notfound.png')
 }
 .card-title{
     overflow: hidden;
@@ -21,9 +31,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
-.card-img-top {
-    background-image: url('https://www.unesale.com/ProductImages/Large/notfound.png')
-}
+
 @media (max-width: 576px)
 {
     .card-img-top {
