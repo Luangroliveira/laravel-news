@@ -39,8 +39,4 @@ class HomeController extends Controller
 
         return view('home',['news' => $news, 'page' => $page, 'search' => $search, 'max_pages' => $max_pages]);
     }
-    public function detail()
-    {
-
-    }
 }

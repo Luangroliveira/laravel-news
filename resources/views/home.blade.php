@@ -14,16 +14,18 @@
     </nav>
     <div class="card-columns">
         @foreach ($news as $new)
-            <div class="card mb-4">
-                <img class="card-img-top" src=" @if($new->urlToImage) {{ $new->urlToImage }} @else https://www.unesale.com/ProductImages/Large/notfound.png @endif" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $new->title }}</h5>
-                    <p class="card-text">{{ $new->description }}</p>
+            <a href="{{ $new->url }}" target="new_blank">
+                <div class="card mb-4">
+                    <img class="card-img-top" src=" @if($new->urlToImage) {{ $new->urlToImage }} @else https://www.unesale.com/ProductImages/Large/notfound.png @endif" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $new->title }}</h5>
+                        <p class="card-text">{{ $new->description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ mb_strtoupper( date('d-M', strtotime($new->publishedAt))) }}</small>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">{{ mb_strtoupper( date('d-M', strtotime($new->publishedAt))) }}</small>
-                </div>
-            </div>
+            </a>
         @endforeach
     </div>
     <nav class="mt-4" aria-label="Page navigation">
