@@ -29,7 +29,7 @@
                 @foreach ($news as $new)
                     <a href="{{ $new->url }}" target="new_blank">
                         <div class="card  card-news mb-4">
-                            <img class="card-img-top" src="@if($new->urlToImage) {{ $new->urlToImage }} @else https://www.unesale.com/ProductImages/Large/notfound.png @endif" alt="Card image cap">
+                            <img class="card-img-top" src="{{ $new->urlToImage }}" alt="{{ $new->title }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $new->title }}</h5>
                                 <p class="card-text">{{ $new->description }}</p>
@@ -44,7 +44,7 @@
             <nav class="mt-4" aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <li class="page-item @if($page == 1) disabled @endif">
-                        <a class="page-link" href=" @if($page == 1) # @else {{ $search ? route('home', [$page - 1]).'?search='.$search : route('home', [$page - 1]) }} @endif " aria-label="Previous">
+                        <a class="page-link" href="@if($page == 1) # @else {{ $search ? route('home', [$page - 1]).'?search='.$search : route('home', [$page - 1]) }} @endif " aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -53,15 +53,17 @@
                         <li class="page-item"><a class="page-link" href="{{ $search ? route('home', [$page - 1]).'?search='.$search : route('home', [$page - 1]) }}">{{ $page - 1 }}</a></li>
                     @endif
                     <li class="page-item active"><a class="page-link" href="#">{{ $page }}</a></li>
-                    <li class="page-item"><a class="page-link" href="{{ $search ? route('home', [$page + 1]).'?search='.$search : route('home', [$page + 1]) }}">{{ $page + 1 }}</a></li>
+                    @if($page < 8)
+                        <li class="page-item"><a class="page-link" href="{{ $search ? route('home', [$page + 1]).'?search='.$search : route('home', [$page + 1]) }}">{{ $page + 1 }}</a></li>
+                    @endif
                     @if($page == 1)
                         <li class="page-item"><a class="page-link" href="{{ $search ? route('home', [$page + 2]).'?search='.$search : route('home', [$page + 2]) }}">{{ $page + 2 }}</a></li>
-                    @endif
-                    <li class="page-item">
-                    <a class="page-link" href="{{ $search ? route('home', [$page + 1]).'?search='.$search : route('home', [$page + 1]) }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    @endif                    
+                    <li class="page-item @if($page >= 8) disabled @endif">
+                        <a class="page-link" href="@if($page < 8){{ $search ? route('home', [$page + 1]).'?search='.$search : route('home', [$page + 1]) }}@endif" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </li>
                 </ul>
             </nav>

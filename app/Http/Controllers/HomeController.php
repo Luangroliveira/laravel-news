@@ -17,25 +17,21 @@ class HomeController extends Controller
 
         $search =  $request->search;
 
-        if($search)
+        if($search){
             $pagina = 'https://newsapi.org/v2/everything?language=pt&pageSize=12&apiKey='.env("API_KEY").'&page='.$page.'&q='.$search;
-        else
+        }else{
             $pagina = 'https://newsapi.org/v2/top-headlines?language=pt&pageSize=12&apiKey='.env("API_KEY").'&page='.$page;
-
+        }
         $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $pagina);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+        $response = json_decode(curl_exec($ch));
+        curl_close($ch);
+        $news = collect($response->articles);
 
-        curl_setopt( $ch, CURLOPT_URL, $pagina );
-
-        // define que o conteúdo obtido deve ser retornado em vez de exibido
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-
-        $retorno = json_decode(curl_exec( $ch ));
-
-        curl_close( $ch );
-
-        $news = collect($retorno->articles);
-
-        $max_pages = $retorno->totalResults/12;
+        $max_pages = $response->totalResults/12;
 
         return view('home',['news' => $news, 'page' => $page, 'search' => $search, 'max_pages' => $max_pages]);
     }

@@ -10,7 +10,17 @@
 }
 .card-img-top {
     height: 170px;
-    background-image: url('https://www.unesale.com/ProductImages/Large/notfound.png')
+    min-height: 170px;
+}
+.card-img-top:before {
+    content: ' ';
+    display: block;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    height: 170px;
+    width: 100%;
+    background-image: url('https://www.unesale.com/ProductImages/Large/notfound.png');
 }
 .card-title{
     overflow: hidden;
