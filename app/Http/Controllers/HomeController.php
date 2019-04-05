@@ -11,12 +11,11 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function php(Request $request)
     {
         $page = $request->page ? $request->page : 1;
 
-        $search =  $request->search;
-
+        $search = str_replace(" ", "+",$request->search);
         if($search){
             $pagina = 'https://newsapi.org/v2/everything?language=pt&pageSize=12&apiKey='.env("API_KEY").'&page='.$page.'&q='.$search;
         }else{
@@ -33,6 +32,6 @@ class HomeController extends Controller
 
         $max_pages = $response->totalResults/12;
 
-        return view('home',['news' => $news, 'page' => $page, 'search' => $search, 'max_pages' => $max_pages]);
+        return view('php',['news' => $news, 'page' => $page, 'search' => $search, 'max_pages' => $max_pages]);
     }
 }

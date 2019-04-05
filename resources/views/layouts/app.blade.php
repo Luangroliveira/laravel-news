@@ -72,7 +72,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 flex-center">
             @yield('content')
         </main>
     </div>
